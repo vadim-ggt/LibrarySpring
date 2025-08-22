@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<GetUserDto> getAllUsers() {
-        return List.of();
+        return userRepository.findAll().stream()
+                .map(UserMapper::toGetDto)
+                .toList();
     }
 
     @Override
