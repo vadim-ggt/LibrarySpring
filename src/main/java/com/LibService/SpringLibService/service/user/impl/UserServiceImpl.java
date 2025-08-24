@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +39,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public GetUserDto updateUser(Long id, UpdateUserDto dto) {
-        return null;
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+        UserMapper.updateEntity(user, dto);
+
+        User updatedUser = userRepository.save(user);
+        return UserMapper.toGetDto(updatedUser);
     }
 
     @Override
     public void deleteUser(Long id) {
-
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+        userRepository.delete(user);
     }
 
 
