@@ -21,7 +21,7 @@ public class Book {
 
     private String title;
     private String author;
-    private int year;
+    private Integer year;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Request> requests;
