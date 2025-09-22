@@ -17,6 +17,7 @@ public class BookMapper {
 
     public static GetBookDto toGetDto(Book book) {
         GetBookDto dto = new GetBookDto();
+        dto.setId(book.getId());
         dto.setTitle(book.getTitle());
         dto.setAuthor(book.getAuthor());
         dto.setYear(book.getYear());

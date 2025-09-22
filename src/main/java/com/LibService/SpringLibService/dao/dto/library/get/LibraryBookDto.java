@@ -1,15 +1,13 @@
-package com.LibService.SpringLibService.dao.dto.book.create;
-
+package com.LibService.SpringLibService.dao.dto.library.get;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class CreateBookDto {
+@Setter
+public class LibraryBookDto {
+    private Long id;
     private String title;
     private String author;
     private int year;
-    private Long libraryId;
-
 }

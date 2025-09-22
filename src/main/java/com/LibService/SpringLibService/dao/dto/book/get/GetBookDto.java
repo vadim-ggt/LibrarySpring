@@ -1,6 +1,5 @@
 package com.LibService.SpringLibService.dao.dto.book.get;
 
-import com.LibService.SpringLibService.dao.entity.Library;
 import lombok.Getter;
 import lombok.Setter;
 

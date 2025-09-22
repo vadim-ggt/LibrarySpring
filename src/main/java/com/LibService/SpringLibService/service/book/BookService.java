@@ -1,4 +1,13 @@
 package com.LibService.SpringLibService.service.book;
 
+import com.LibService.SpringLibService.dao.dto.book.create.CreateBookDto;
+import com.LibService.SpringLibService.dao.dto.book.get.GetBookDto;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 public interface BookService {
+
+   GetBookDto createBook(CreateBookDto dto);
+   List<GetBookDto> getAllBooks();
 }
