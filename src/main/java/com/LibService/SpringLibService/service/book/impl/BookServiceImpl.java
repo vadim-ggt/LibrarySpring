@@ -3,7 +3,10 @@ package com.LibService.SpringLibService.service.book.impl;
 import com.LibService.SpringLibService.dao.dto.book.create.CreateBookDto;
 import com.LibService.SpringLibService.dao.dto.book.get.GetBookDto;
 import com.LibService.SpringLibService.dao.entity.Book;
+import com.LibService.SpringLibService.dao.entity.Library;
 import com.LibService.SpringLibService.dao.repository.BookRepository;
+import com.LibService.SpringLibService.dao.repository.LibraryRepository;
+import com.LibService.SpringLibService.exception.EntityNotFoundException;
 import com.LibService.SpringLibService.mapper.BookMapper;
 import com.LibService.SpringLibService.service.book.BookService;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +20,22 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final LibraryRepository libraryRepository;
 
     @Override
     public GetBookDto createBook(CreateBookDto dto) {
-        Book book = BookMapper.toEntity(dto);
-        return BookMapper.toGetDto(bookRepository.save(book));
+        Library library = libraryRepository.findById(dto.getLibraryId())
+                .orElseThrow(() -> new EntityNotFoundException("Library"));
+
+        Book book = Book.builder()
+                .title(dto.getTitle())
+                .author(dto.getAuthor())
+                .year(dto.getYear())
+                .library(library)
+                .build();
+
+        Book saved = bookRepository.save(book);
+        return BookMapper.toGetDto(saved); // возвращаем DTO
     }
 
     @Override
