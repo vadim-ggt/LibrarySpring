@@ -4,6 +4,7 @@ import com.LibService.SpringLibService.dao.dto.library.create.CreateLibraryDto;
 import com.LibService.SpringLibService.dao.dto.library.get.GetLibraryDto;
 import com.LibService.SpringLibService.dao.entity.Library;
 import com.LibService.SpringLibService.dao.repository.LibraryRepository;
+import com.LibService.SpringLibService.exception.EntityNotFoundException;
 import com.LibService.SpringLibService.mapper.LibraryMapper;
 import com.LibService.SpringLibService.service.library.LibraryService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,12 @@ public class LibraryServiceImpl implements LibraryService {
         return libraryRepository.findAll().stream()
                 .map(LibraryMapper::toGetDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public GetLibraryDto getLibrary(Long id) {
+        Library library = libraryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Library not found: " + id));
+        return LibraryMapper.toGetDto(library);
     }
 }

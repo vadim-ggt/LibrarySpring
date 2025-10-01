@@ -29,4 +29,10 @@ public class LibraryController {
     }
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GetLibraryDto> getLibrary(@PathVariable Long id) {
+        return ResponseEntity.ok(libraryService.getLibrary(id));
+    }
+
+
 }

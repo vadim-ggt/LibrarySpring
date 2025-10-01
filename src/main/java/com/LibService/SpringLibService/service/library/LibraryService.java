@@ -9,4 +9,5 @@ public interface LibraryService {
 
     GetLibraryDto createLibrary(CreateLibraryDto dto);
     List<GetLibraryDto> getAllLibraries();
+    GetLibraryDto getLibrary(Long id);
 }

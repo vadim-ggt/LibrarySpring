@@ -18,6 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
+    @Override
     public GetUserDto createUser(CreateUserDto dto) {
         User user = UserMapper.toEntity(dto);
         return UserMapper.toGetDto(userRepository.save(user));
