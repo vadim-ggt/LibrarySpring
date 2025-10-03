@@ -2,6 +2,7 @@ package com.LibService.SpringLibService.service.book.impl;
 
 import com.LibService.SpringLibService.dao.dto.book.create.CreateBookDto;
 import com.LibService.SpringLibService.dao.dto.book.get.GetBookDto;
+import com.LibService.SpringLibService.dao.dto.book.update.UpdateBookDto;
 import com.LibService.SpringLibService.dao.entity.Book;
 import com.LibService.SpringLibService.dao.entity.Library;
 import com.LibService.SpringLibService.dao.repository.BookRepository;
@@ -50,5 +51,19 @@ public class BookServiceImpl implements BookService {
         return BookMapper.toGetDto(book);
     }
 
+    @Override
+    public void deleteBook(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found: " + id));
+        bookRepository.delete(book);
+    }
+
+
+    @Override
+    public GetBookDto updateBook(Long id, UpdateBookDto dto) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found: " + id));
+
+    }
 
 }

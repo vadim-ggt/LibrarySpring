@@ -2,6 +2,7 @@ package com.LibService.SpringLibService.controller;
 
 import com.LibService.SpringLibService.dao.dto.book.create.CreateBookDto;
 import com.LibService.SpringLibService.dao.dto.book.get.GetBookDto;
+import com.LibService.SpringLibService.dao.dto.book.update.UpdateBookDto;
 import com.LibService.SpringLibService.service.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
@@ -14,17 +15,35 @@ import java.util.List;
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
+
     private final BookService bookService;
+
 
     @PostMapping
     public ResponseEntity<GetBookDto> createBook(@RequestBody CreateBookDto dto) {
         return ResponseEntity.ok(bookService.createBook(dto));
     }
 
+
     @GetMapping
     public ResponseEntity <List<GetBookDto>> getAllBooks() { return ResponseEntity.ok(bookService.getAllBooks());}
 
+
     @GetMapping("/{id}")
     public ResponseEntity<GetBookDto> getBook(@PathVariable Long id) { return ResponseEntity.ok(bookService.getBook(id)); }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GetBookDto> updateBook(@PathVariable Long id,
+                                                 @RequestBody UpdateBookDto dto) {
+        return ResponseEntity.ok(bookService.updateBook(id, dto));
+    }
 
 }
