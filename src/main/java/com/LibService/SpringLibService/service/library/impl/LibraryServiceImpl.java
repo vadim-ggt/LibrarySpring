@@ -2,6 +2,7 @@ package com.LibService.SpringLibService.service.library.impl;
 
 import com.LibService.SpringLibService.dao.dto.library.create.CreateLibraryDto;
 import com.LibService.SpringLibService.dao.dto.library.get.GetLibraryDto;
+import com.LibService.SpringLibService.dao.dto.library.update.UpdateLibraryDto;
 import com.LibService.SpringLibService.dao.entity.Library;
 import com.LibService.SpringLibService.dao.repository.LibraryRepository;
 import com.LibService.SpringLibService.exception.EntityNotFoundException;
@@ -21,11 +22,8 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public GetLibraryDto createLibrary(CreateLibraryDto dto) {
-        // Преобразуем DTO в entity
         Library library = LibraryMapper.toEntity(dto);
-        // Сохраняем в базу
         Library saved = libraryRepository.save(library);
-        // Преобразуем обратно в DTO для ответа
         return LibraryMapper.toGetDto(saved);
     }
 
@@ -42,4 +40,22 @@ public class LibraryServiceImpl implements LibraryService {
                 .orElseThrow(() -> new EntityNotFoundException("Library not found: " + id));
         return LibraryMapper.toGetDto(library);
     }
+
+    @Override
+    public GetLibraryDto updateLibrary(Long id, UpdateLibraryDto dto) {
+        Library library = libraryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Library not found: " + id));
+        LibraryMapper.updateEntity(library, dto);
+        Library updatedLibrary = libraryRepository.save(library);
+        return LibraryMapper.toGetDto(updatedLibrary);
+    }
+
+
+    @Override
+    public void deleteLibrary(Long id) {
+        Library library = libraryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Library not found: " + id));
+        libraryRepository.delete(library);
+    }
+
 }

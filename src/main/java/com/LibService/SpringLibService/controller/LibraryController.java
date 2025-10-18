@@ -1,7 +1,9 @@
 package com.LibService.SpringLibService.controller;
 
+import com.LibService.SpringLibService.dao.dto.book.get.GetBookDto;
 import com.LibService.SpringLibService.dao.dto.library.create.CreateLibraryDto;
 import com.LibService.SpringLibService.dao.dto.library.get.GetLibraryDto;
+import com.LibService.SpringLibService.dao.dto.library.update.UpdateLibraryDto;
 import com.LibService.SpringLibService.service.library.LibraryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +36,16 @@ public class LibraryController {
         return ResponseEntity.ok(libraryService.getLibrary(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<GetLibraryDto> updateLibrary(@PathVariable Long id,
+                                                       @RequestBody UpdateLibraryDto dto) {
+        return ResponseEntity.ok(libraryService.updateLibrary(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteLibrary(@PathVariable Long id) {
+        libraryService.deleteLibrary(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

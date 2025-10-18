@@ -1,8 +1,10 @@
 package com.LibService.SpringLibService.mapper;
+import com.LibService.SpringLibService.dao.dto.book.update.UpdateBookDto;
 import com.LibService.SpringLibService.dao.dto.library.create.CreateLibraryDto;
 import com.LibService.SpringLibService.dao.dto.library.get.GetLibraryDto;
 import com.LibService.SpringLibService.dao.dto.library.get.LibraryBookDto;
 import com.LibService.SpringLibService.dao.dto.library.get.LibraryUserDto;
+import com.LibService.SpringLibService.dao.dto.library.update.UpdateLibraryDto;
 import com.LibService.SpringLibService.dao.entity.Book;
 import com.LibService.SpringLibService.dao.entity.Library;
 import com.LibService.SpringLibService.dao.entity.User;
@@ -65,5 +67,12 @@ public class LibraryMapper {
         dto.setEmail(user.getEmail());
         return dto;
     }
+
+    public static void updateEntity(Library library, UpdateLibraryDto dto) {
+        if (dto.getName() != null) library.setName(dto.getName());
+        if (dto.getAddress() != null) library.setAddress(dto.getAddress());
+    }
+
+
 
 }
